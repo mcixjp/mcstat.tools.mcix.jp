@@ -1,0 +1,394 @@
+.card {
+  overflow: hidden;
+  animation: cardIn .3s cubic-bezier(.2,0,.2,1);
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Status bar ── */
+.statusBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  border-bottom: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow sweep on online */
+.statusBar.online::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 0% 50%, var(--green-glow) 0%, transparent 60%);
+  animation: glowSweep 4s ease-in-out infinite alternate;
+}
+
+@keyframes glowSweep {
+  from { opacity: 0.5; transform: translateX(-30%); }
+  to   { opacity: 1;   transform: translateX(0%); }
+}
+
+.online  { background: #0a1f12; border-bottom-color: #44e06025; }
+.offline { background: #1f0a0a; border-bottom-color: #ff555525; }
+
+/* Animated dot */
+.dot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.dotInner {
+  width: 100%;
+  height: 100%;
+  background: var(--green);
+}
+
+.online .dotInner {
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+.offline .dotInner {
+  background: var(--red);
+}
+
+@keyframes dotPulse {
+  0%,100% { box-shadow: 0 0 0 0 var(--green-glow); }
+  50%      { box-shadow: 0 0 0 6px transparent; }
+}
+
+.statusLabel {
+  position: relative;
+  z-index: 1;
+}
+.online  .statusLabel { color: var(--green); text-shadow: 0 0 12px var(--green-glow); }
+.offline .statusLabel { color: var(--red); }
+
+.statusAddr {
+  margin-left: auto;
+  font-size: 8px;
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 16px;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+.statusTime {
+  font-size: 7px;
+  color: var(--border);
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Main info area ── */
+.infoArea {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  min-height: 120px;
+}
+
+/* Favicon column */
+.faviconCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 12px;
+  border-right: 2px solid var(--border-lo);
+  background: #0e1220;
+  gap: 8px;
+}
+
+.favicon {
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  outline: 3px solid #000;
+  outline-offset: 2px;
+  border: 2px solid var(--border);
+  display: block;
+}
+
+.faviconPlaceholder {
+  width: 64px;
+  height: 64px;
+  background: var(--panel2);
+  border: 2px solid var(--border-lo);
+  outline: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* Little grass block icon inside placeholder */
+.placeholderBlock {
+  width: 24px;
+  height: 24px;
+  background: var(--grass-top);
+  border: 2px solid #000;
+  box-shadow: inset -2px -2px 0 #3a6e14;
+}
+
+.placeholderText {
+  font-size: 7px;
+  color: var(--dim);
+  letter-spacing: 1px;
+}
+
+/* Latency badge */
+.latBadge {
+  font-family: var(--mono);
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  background: var(--panel2);
+  border: 1px solid var(--border-lo);
+}
+
+/* Info column */
+.infoCol {
+  padding: 18px 22px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* MOTD */
+.motdWrap {
+  /* inner inset */
+  background: #0a0d18;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #000 var(--border) var(--border) #000;
+  padding: 10px 12px;
+}
+
+.motdLine {
+  font-family: var(--mono);
+  font-size: 26px;
+  line-height: 1.35;
+  display: block;
+  word-break: break-word;
+}
+
+/* Stats row */
+.stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.statBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statVal {
+  font-family: var(--mono);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.green  { color: var(--green); }
+.yellow { color: var(--yellow); }
+.red    { color: var(--red); }
+.blue   { color: var(--blue); }
+.purple { color: var(--purple); }
+.dim    { color: var(--dim); }
+
+/* ── Pixel block capacity gauge ── */
+.gaugeSection {
+  border-top: 2px solid var(--border-lo);
+  padding: 14px 22px;
+}
+
+.gaugeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.gaugeCount {
+  font-family: var(--mono);
+  font-size: 18px;
+  color: var(--text);
+}
+
+/* Block-style gauge: row of 10 pixel squares */
+.gauge {
+  display: flex;
+  gap: 3px;
+}
+
+.gaugeBlock {
+  flex: 1;
+  height: 16px;
+  background: var(--panel2);
+  border: 1px solid var(--border-lo);
+  position: relative;
+  transition: background .4s ease;
+}
+
+/* Filled block */
+.gaugeBlock.filled { background: var(--green); border-color: var(--green-dim); }
+.gaugeBlock.filledMed { background: var(--yellow); border-color: #9a7a20; }
+.gaugeBlock.filledHigh { background: var(--red); border-color: #882020; }
+
+/* Glint on filled blocks */
+.gaugeBlock.filled::after,
+.gaugeBlock.filledMed::after,
+.gaugeBlock.filledHigh::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  height: 2px;
+  background: #ffffff30;
+}
+
+/* ── Player section ── */
+.playerSection {
+  border-top: 2px solid var(--border-lo);
+  padding: 14px 22px;
+}
+
+.playerList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* Inventory slot style */
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel2);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--border-lo) var(--border-hi) var(--border-hi) var(--border-lo);
+  outline: 1px solid #000;
+  padding: 6px 10px;
+  font-family: var(--mono);
+  font-size: 20px;
+  color: var(--text);
+  transition: border-color .15s, background .15s;
+  cursor: default;
+}
+
+.chip:hover {
+  background: var(--panel-hi);
+  border-color: var(--border-hi) var(--border-lo) var(--border-lo) var(--border-hi);
+}
+
+.head {
+  image-rendering: pixelated;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+}
+
+.noPlayers {
+  font-family: var(--mono);
+  font-size: 20px;
+  color: var(--dim);
+  margin-top: 6px;
+}
+
+/* ── JSON section ── */
+.jsonSection {
+  border-top: 2px solid var(--border-lo);
+}
+
+.jsonToggle {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--dim);
+  font-family: var(--pixel);
+  font-size: 7px;
+  letter-spacing: 2px;
+  padding: 12px 22px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color .15s, background .15s;
+}
+.jsonToggle:hover { color: var(--text); background: #ffffff04; }
+
+.arrow { display: inline-block; transition: transform .2s; }
+.arrowOpen { transform: rotate(90deg); }
+
+.jsonBody { padding: 0 22px 20px; }
+
+.jsonPre {
+  background: #06090f;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #000 var(--border) var(--border) #000;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 16px;
+  color: #88aacc;
+  overflow-x: auto;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ── Offline body ── */
+.offlineBody {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px 22px;
+}
+
+.offlineText { flex: 1; }
+
+.offlineMsg {
+  font-family: var(--mono);
+  font-size: 26px;
+  color: var(--dim);
+  margin-bottom: 10px;
+}
+
+.offlineErr {
+  font-family: var(--mono);
+  font-size: 18px;
+  color: var(--red);
+  opacity: .8;
+  line-height: 1.5;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .infoArea { grid-template-columns: 1fr; }
+  .faviconCol {
+    flex-direction: row;
+    justify-content: flex-start;
+    border-right: none;
+    border-bottom: 2px solid var(--border-lo);
+    padding: 14px 18px;
+  }
+}

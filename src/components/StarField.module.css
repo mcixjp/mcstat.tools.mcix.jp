@@ -1,0 +1,91 @@
+/* ── Night sky backdrop ── */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Moon */
+.moon {
+  position: absolute;
+  top: 6%;
+  right: 12%;
+  width: 56px;
+  height: 56px;
+  background: #e8e0c0;
+  box-shadow:
+    0 0 0 4px #000,
+    0 0 40px #e8e0c088,
+    0 0 80px #e8e0c033;
+  /* Pixelated moon phases */
+  image-rendering: pixelated;
+}
+/* Moon craters */
+.moon::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 20%;
+  width: 25%;
+  height: 25%;
+  background: #c8b888;
+  box-shadow:
+    28px 8px 0 4px #c8b888,
+    10px 20px 0 3px #c8b888;
+}
+
+/* Stars */
+.stars {
+  position: absolute;
+  inset: 0;
+}
+
+.star {
+  position: absolute;
+  background: #fff;
+  animation: twinkle var(--dur, 3s) ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: var(--lo, 0.1); transform: scale(1); }
+  to   { opacity: var(--hi, 0.9); transform: scale(1.4); }
+}
+
+/* Floating clouds (pixel-blocky) */
+.clouds {
+  position: absolute;
+  inset: 0;
+}
+
+.cloud {
+  position: absolute;
+  background: #1e2840;
+  animation: drift linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes drift {
+  from { transform: translateX(-200px); }
+  to   { transform: translateX(calc(100vw + 200px)); }
+}
+
+/* Grid of pixel "stars" using SVG pattern */
+.pixelGrid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, #ffffff18 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.3;
+}
+
+/* Ambient fog at bottom */
+.fog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(transparent, var(--night));
+}

@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+:root {
+  /* Core palette */
+  --night:      #060a14;
+  --night2:     #0c1220;
+  --panel:      #1c2030;
+  --panel-hi:   #232840;
+  --panel2:     #141824;
+  --border:     #323a5a;
+  --border-hi:  #4a5680;
+  --border-lo:  #1a1f30;
+
+  /* Status colors */
+  --green:      #44e060;
+  --green-glow: #44e06044;
+  --green-dim:  #1d5c28;
+  --red:        #ff5555;
+  --red-glow:   #ff555540;
+  --yellow:     #ffcc44;
+  --blue:       #88ccff;
+  --purple:     #cc88ff;
+  --orange:     #ffaa44;
+
+  /* Text */
+  --text:       #c8d4e4;
+  --text-hi:    #e8f0fc;
+  --dim:        #5a6a88;
+  --white:      #ffffff;
+
+  /* Minecraft block colors */
+  --grass-top:  #5d9e2f;
+  --grass-side: #7ab33d;
+  --dirt:       #8b5e3c;
+  --stone:      #7a7a7a;
+  --wood:       #9c6b3c;
+  --sand:       #d9c37a;
+  --coal:       #333333;
+
+  --pixel: 'Press Start 2P', monospace;
+  --mono:  'VT323', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--night);
+  color: var(--text);
+  font-family: var(--pixel);
+  font-size: 12px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--panel2); }
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border: 2px solid var(--panel2);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--border-hi); }
+
+/* ── Minecraft-style beveled panel ── */
+/* Outer bevel: top/left lighter, bottom/right darker */
+.mc-panel {
+  background: var(--panel);
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--border-hi) var(--border-lo) var(--border-lo) var(--border-hi);
+  outline: 2px solid #000;
+  outline-offset: -1px;
+  box-shadow:
+    inset 2px 2px 0 #ffffff08,
+    inset -2px -2px 0 #00000030,
+    0 8px 32px #00000060;
+}
+
+/* ── Minecraft-style inset (sunken) ── */
+.mc-inset {
+  background: var(--panel2);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--border-lo) var(--border-hi) var(--border-hi) var(--border-lo);
+  outline: 1px solid #000;
+}
+
+/* ── Pixel text shadow ── */
+.px-shadow {
+  text-shadow: 3px 3px 0 #000a, 1px 1px 0 #000;
+}
+
+/* ── Section label ── */
+.mc-label {
+  font-size: 8px;
+  color: var(--dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ── Input ── */
+.mc-input {
+  background: #0a0d18;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #000 var(--border) var(--border) #000;
+  color: var(--white);
+  font-family: var(--mono);
+  font-size: 24px;
+  padding: 10px 14px;
+  outline: none;
+  letter-spacing: 1px;
+  width: 100%;
+  transition: border-color .15s, box-shadow .15s;
+  caret-color: var(--green);
+}
+.mc-input::placeholder { color: #2a3248; }
+.mc-input:focus {
+  border-color: #000 var(--green) var(--green) #000;
+  box-shadow: inset 0 0 0 1px #44e06022;
+}
+
+/* ── Button base ── */
+.mc-btn {
+  font-family: var(--pixel);
+  font-size: 9px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  transition: filter .1s;
+  user-select: none;
+}
+.mc-btn:not(:disabled):hover { filter: brightness(1.15); }
+.mc-btn:not(:disabled):active { top: 2px; }
+.mc-btn:disabled { filter: brightness(.4) saturate(.3); cursor: not-allowed; }
